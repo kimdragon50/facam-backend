@@ -48,6 +48,45 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>6.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sndyuk</groupId>
+            <artifactId>logback-more-appenders</artifactId>
+            <version>1.8.3</version>
+        </dependency>
+
+        <!-- [Optional] If you use The Fluentd appender, You need to add the dependency(fluent-logger). -->
+        <dependency>
+            <groupId>org.fluentd</groupId>
+            <artifactId>fluent-logger</artifactId>
+            <version>0.3.4</version>
+        </dependency>
+
+        <!-- [Optional] If you use The Fluency appender, You need to add the dependency(fluency). -->
+        <dependency>
+            <groupId>org.komamitsu</groupId>
+            <artifactId>fluency-core</artifactId>
+            <version>2.4.1</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.komamitsu</groupId>
+            <artifactId>fluency-fluentd</artifactId>
+            <version>2.4.1</version>
+            <optional>true</optional>
+        </dependency>
+
     </dependencies>
 
     <build>
