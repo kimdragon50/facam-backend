@@ -3,7 +3,7 @@ kind: Config
 
 
 profiles:
-  - name: dev
+  - name: prod
     build:
       tagPolicy:
         envTemplate:
