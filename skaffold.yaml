@@ -16,4 +16,5 @@ profiles:
               - -U
               - -DskipTests
               - "-Djib.container.environment=SPRING_PROFILES_ACTIVE=prod"
+              - - -Pprod
 
