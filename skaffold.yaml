@@ -1,0 +1,19 @@
+apiVersion: skaffold/v2alpha4
+kind: Config
+
+
+profiles:
+  - name: dev
+    build:
+      tagPolicy:
+        envTemplate:
+          template: "{{.IMAGE_NAME}}:{{.VER}}"
+      artifacts:
+        - image: 058475846659.dkr.ecr.ap-northeast-2.amazonaws.com/backend-emp
+          jib:
+            args:
+              - -B
+              - -U
+              - -DskipTests
+              - "-Djib.container.environment=SPRING_PROFILES_ACTIVE=prod"
+
