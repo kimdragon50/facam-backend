@@ -7,7 +7,7 @@ profiles:
     build:
       tagPolicy:
         envTemplate:
-          template: "{{.IMAGE_NAME}}:{{.VER}}"
+          template: "{{.VER}}"
       artifacts:
         - image: 058475846659.dkr.ecr.ap-northeast-2.amazonaws.com/backend-emp
           jib:
