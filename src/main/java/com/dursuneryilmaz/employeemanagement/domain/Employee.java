@@ -1,9 +1,12 @@
 package com.dursuneryilmaz.employeemanagement.domain;
 
+import io.swagger.annotations.ApiModel;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "employee")
+@ApiModel
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +18,6 @@ public class Employee {
     public Employee() {
 
     }
-
     public Employee(String firstName, String lastName, String emailAddress) {
         this.firstName = firstName;
         this.lastName = lastName;

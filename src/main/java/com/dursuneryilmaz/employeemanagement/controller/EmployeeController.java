@@ -1,10 +1,12 @@
 package com.dursuneryilmaz.employeemanagement.controller;
 
 import com.dursuneryilmaz.employeemanagement.domain.Employee;
-import com.dursuneryilmaz.employeemanagement.exception.EmployeeNotFoundException;
 import com.dursuneryilmaz.employeemanagement.service.IEmployeeService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,12 +14,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("")
 @CrossOrigin()
+
+
 public class EmployeeController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -27,9 +28,10 @@ public class EmployeeController {
 
     //get all employees
     @GetMapping("/employees")
+    @ApiOperation(value ="emp list", notes = "회원 리스트")
     public List<Employee> getAll() {
 
-        logger.debug("employ_list");
+        logger.debug("employee_list");
 
         return employeeService.getAll();
 
@@ -38,22 +40,21 @@ public class EmployeeController {
 
     //add employee
     @PostMapping("/employees")
+    @ApiOperation(value ="emp Add", notes = "회원 추가")
     public Employee createEmployee(@RequestBody Employee employee) {
 
-        logger.trace("employ_add");
-        logger.debug("employ_add");
-        logger.info("employ_add");
-        logger.warn("employ_add");
-        logger.error("employ_add");
+        logger.debug("employee_add");
 
         return employeeService.add(employee);
     }
 
     //get employee by id
     @GetMapping("/employees/{id}")
+    @ApiOperation(value ="emp Get", notes = "회원정보 확인")
+    @ApiImplicitParam(name = "id", value = "ID", required = true, dataType = "string", paramType = "path")
     public ResponseEntity<Employee> getById(@PathVariable Long id) {
 
-        logger.debug("employ_getid");
+        logger.debug("employee_getid");
 
         Employee employee = employeeService.findById(id);
         return ResponseEntity.ok(employee);
@@ -61,9 +62,10 @@ public class EmployeeController {
 
     //update employee
     @PutMapping("/employees")
+    @ApiOperation(value ="emp Update", notes = "회원 업데이트")
     public ResponseEntity<Employee> update(@RequestBody Employee employee) {
 
-        logger.debug("employ_update");
+        logger.debug("employee_update");
 
         Employee employeeUpdated = employeeService.update(employee);
         return ResponseEntity.ok(employeeUpdated);
@@ -71,18 +73,22 @@ public class EmployeeController {
 
     //delete employee
     @PostMapping("/employees/delete")
+    @ApiOperation(value ="emp Delete", notes = "회원 삭제")
     public ResponseEntity<String> delete(@RequestBody Employee employee) {
 
-        logger.debug("employ_delet ");
+        logger.debug("employee_delete ");
 
         employeeService.delete(employee);
         return ResponseEntity.ok("Employee deleted.");
     }
+
     // deleteById
     @DeleteMapping("employees/{id}")
+    @ApiOperation(value ="emp Delete Byid", notes = "회원 삭제")
+    @ApiImplicitParam(name = "id", value = "ID", required = true, dataType = "string", paramType = "path")
     public ResponseEntity<Map<String,Boolean>> deleteById(@PathVariable Long id){
 
-        logger.debug("employ_delet_byid");
+        logger.debug("employee_delete_byid");
 
         employeeService.deleteById(id);
         Map<String,Boolean> response = new HashMap<>();
