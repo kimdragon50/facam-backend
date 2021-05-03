@@ -32,7 +32,7 @@ public class SwaggerConfig {
                 .groupName(version)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.ant("/employees/**"))
+                .paths(PathSelectors.ant("/api/v1/employees/**"))
                 .build();
     }
 }
