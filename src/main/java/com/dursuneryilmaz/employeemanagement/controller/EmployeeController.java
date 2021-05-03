@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/")
-
+@CrossOrigin
 
 public class EmployeeController {
 
@@ -29,7 +29,7 @@ public class EmployeeController {
     //get all employees
     @GetMapping("/employees")
     @ApiOperation(value ="emp list", notes = "회원 리스트")
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
+
     public List<Employee> getAll() {
 
         logger.debug("employee_list");
@@ -42,7 +42,6 @@ public class EmployeeController {
     //add employee
     @PostMapping("/employees")
     @ApiOperation(value ="emp Add", notes = "회원 추가")
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public Employee createEmployee(@RequestBody Employee employee) {
 
         logger.debug("employee_add");
@@ -54,7 +53,7 @@ public class EmployeeController {
     @GetMapping("/employees/{id}")
     @ApiOperation(value ="emp Get", notes = "회원정보 확인")
     @ApiImplicitParam(name = "id", value = "ID", required = true, dataType = "string", paramType = "path")
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
+
     public ResponseEntity<Employee> getById(@PathVariable Long id) {
 
         logger.debug("employee_getid");
@@ -66,7 +65,7 @@ public class EmployeeController {
     //update employee
     @PutMapping("/employees")
     @ApiOperation(value ="emp Update", notes = "회원 업데이트")
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
+
     public ResponseEntity<Employee> update(@RequestBody Employee employee) {
 
         logger.debug("employee_update");
@@ -78,7 +77,7 @@ public class EmployeeController {
     //delete employee
     @PostMapping("/employees/delete")
     @ApiOperation(value ="emp Delete", notes = "회원 삭제")
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
+
     public ResponseEntity<String> delete(@RequestBody Employee employee) {
 
         logger.debug("employee_delete ");
@@ -91,7 +90,7 @@ public class EmployeeController {
     @DeleteMapping("employees/{id}")
     @ApiOperation(value ="emp Delete Byid", notes = "회원 삭제")
     @ApiImplicitParam(name = "id", value = "ID", required = true, dataType = "string", paramType = "path")
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
+
     public ResponseEntity<Map<String,Boolean>> deleteById(@PathVariable Long id){
 
         logger.debug("employee_delete_byid");
