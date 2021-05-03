@@ -16,9 +16,9 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/")
-@CrossOrigin
+@CrossOrigin()
 
-public class EmployeeController {
+class EmployeeController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
