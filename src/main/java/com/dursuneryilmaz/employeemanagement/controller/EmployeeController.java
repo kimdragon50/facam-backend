@@ -15,13 +15,15 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+
 
 
 public class EmployeeController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
     @Autowired
     private IEmployeeService employeeService;
