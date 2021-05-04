@@ -1,4 +1,4 @@
-package com.dursuneryilmaz.employeemanagement.sys;
+package com.dursuneryilmaz.employeemanagement.controller.sys;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
