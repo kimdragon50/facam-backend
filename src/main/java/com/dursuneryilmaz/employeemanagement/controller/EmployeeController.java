@@ -100,4 +100,13 @@ class EmployeeController {
         response.put("Deleted", Boolean.TRUE);
         return  ResponseEntity.ok(response);
     }
+
+    @GetMapping("/healthz")
+    public String healthz() {
+        logger.debug("########################healthz");
+        return "UP";
+    }
+
+
+
 }
