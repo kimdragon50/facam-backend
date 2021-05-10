@@ -1,5 +1,6 @@
 FROM openjdk:11-jre-slim
 
+
 # Language
 ENV LC_ALL=C.UTF-8
 
