@@ -1,0 +1,10 @@
+/Users/kym/Documents/GSN/simple-employee-management-tool/backend-emp/src/main/java/com/kimdragon/employeemanagement/controller/EmployeeController.java
+/Users/kym/Documents/GSN/simple-employee-management-tool/backend-emp/src/main/java/com/kimdragon/employeemanagement/service/IEmployeeService.java
+/Users/kym/Documents/GSN/simple-employee-management-tool/backend-emp/src/main/java/com/kimdragon/employeemanagement/EmployeeManagementBackendApplication.java
+/Users/kym/Documents/GSN/simple-employee-management-tool/backend-emp/src/main/java/com/kimdragon/employeemanagement/domain/Employee.java
+/Users/kym/Documents/GSN/simple-employee-management-tool/backend-emp/src/main/java/com/kimdragon/employeemanagement/service/EmployeeService.java
+/Users/kym/Documents/GSN/simple-employee-management-tool/backend-emp/src/main/java/com/kimdragon/employeemanagement/repository/IEmployeeRepository.java
+/Users/kym/Documents/GSN/simple-employee-management-tool/backend-emp/src/main/java/com/kimdragon/employeemanagement/sys/SysController.java
+/Users/kym/Documents/GSN/simple-employee-management-tool/backend-emp/src/main/java/com/kimdragon/employeemanagement/config/WebConfig.java
+/Users/kym/Documents/GSN/simple-employee-management-tool/backend-emp/src/main/java/com/kimdragon/employeemanagement/exception/EmployeeNotFoundException.java
+/Users/kym/Documents/GSN/simple-employee-management-tool/backend-emp/src/main/java/com/kimdragon/employeemanagement/config/SwaggerConfig.java
