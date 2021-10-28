@@ -16,9 +16,9 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/")
-@CrossOrigin
+@CrossOrigin()
 
-public class EmployeeController {
+class EmployeeController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -100,4 +100,13 @@ public class EmployeeController {
         response.put("Deleted", Boolean.TRUE);
         return  ResponseEntity.ok(response);
     }
+
+    @GetMapping("/healthz")
+    public String healthz() {
+        logger.debug("########################healthz");
+        return "UP";
+    }
+
+
+
 }
