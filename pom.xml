@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.dursuneryilmaz</groupId>
+    <groupId>com.kimdragon</groupId>
     <artifactId>employee-management-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>employee-management-backend</name>
