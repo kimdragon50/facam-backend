@@ -108,12 +108,12 @@ jobs:
           ref: backend-emp
           # 다른 저장소에 push 하려면 Personal Access Token이 필요.
           token: ${{ secrets.ACTION_TOKEN }}
-          path: example-app-kustomize
+          path: emp-gitops
       # 새 이미지 버전으로 파일 수정
       - name: Update Kubernetes resources
         run: |
           cd emp-gitops/overlays/
-          kustomize edit set image ${{ env.ECR_REPOSITORY }}:${{ steps.image.outputs.version }}
+          kustomize edit set image ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
           cat kustomization.yaml
 
       # 수정된 파일 commit & push
