@@ -82,23 +82,12 @@ jobs:
           push: true
           tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
 
-  deploy:
-    name: gitops deploy
-    runs-on: ubuntu-latest
-    # build job 완료 후 진행
-    needs: ecr-build-push
-
-    steps:
       - name: Get verion
         id: image
         run: |
           VERSION=$(echo ${{ github.sha }} | cut -c1-8)
           echo VERSION=$VERSION
           echo "::set-output name=version::$VERSION"
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
 
       # kustomize 명령을 가져온다.
       - name: Setup Kustomize
