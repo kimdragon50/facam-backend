@@ -25,7 +25,7 @@ env:
   KUBE_NAMESPACE: backend
 
 jobs:
-  build:
+  mvn-build:
 
     runs-on: ubuntu-latest
 
@@ -40,7 +40,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
-  deploy:
+  ecr-build-push:
     name: Deploy
     runs-on: ubuntu-latest
     environment: production
@@ -82,6 +82,47 @@ jobs:
           push: true
           tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
 
+  deploy:
+    runs-on: ubuntu-latest
+    # build job 완료 후 진행
+    needs: build
+
+    steps:
+      - name: Get verion
+        id: image
+        run: |
+          VERSION=$(echo ${{ github.sha }} | cut -c1-8)
+          echo VERSION=$VERSION
+          echo "::set-output name=version::$VERSION"
+
+      # kustomize 명령을 가져온다.
+      - name: Setup Kustomize
+        uses: imranismail/setup-kustomize@v1
+
+      - name: Checkout kustomize repository
+        uses: actions/checkout@v2
+        with:
+          # kubernetes 설정정보 저장소
+          repository: gitops/deployment
+          ref: backend-emp
+          # 다른 저장소에 push 하려면 Personal Access Token이 필요.
+          token: ${{ secrets.ACTION_TOKEN }}
+          path: example-app-kustomize
+      # 새 이미지 버전으로 파일 수정
+      - name: Update Kubernetes resources
+        run: |
+          cd emp-gitops/overlays/
+          kustomize edit set image ${{ env.ECR_REPOSITORY }}:${{ steps.image.outputs.version }}
+          cat kustomization.yaml
+
+      # 수정된 파일 commit & push
+      - name: Commit files
+        run: |
+          cd emp-gitops
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "github-actions"
+          git commit -am "Update image tag"
+          git push -u origin backend-emp
 
 
 
