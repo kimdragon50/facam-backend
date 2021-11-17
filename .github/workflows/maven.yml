@@ -60,7 +60,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Docker Build and ECR Push and Yaml Deploy
+      - name: Docker Build and ECR Push
         id: docker_build
         uses: docker/build-push-action@v2
         with:
@@ -70,6 +70,11 @@ jobs:
           push: true
           tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
 
+  deploy:
+    runs-on: ubuntu-latest
+  # build job 완료 후 진행
+    needs: ecr-build-push
+    steps:
       - name: Get verion
         id: image
         run: |
@@ -95,9 +100,9 @@ jobs:
         run: |
           pwd
           cd emp-gitops/overlays/prd/
-          echo \${{ steps.login-ecr.outputs.registry }}/\${{ env.ECR_REPOSITORY }}
-          echo \${{ steps.login-ecr.outputs.registry }}/\${{ env.ECR_REPOSITORY }}:\${{ github.sha }}
-          kustomize edit set image \${{ steps.login-ecr.outputs.registry }}/\${{ env.ECR_REPOSITORY }}=\${{ steps.login-ecr.outputs.registry }}/\${{ env.ECR_REPOSITORY }}:\${{ github.sha }}
+          echo \${{ ecr-build-push.steps.login-ecr.outputs.registry }}/\${{ env.ECR_REPOSITORY }}
+          echo \${{ ecr-build-push.steps.login-ecr.outputs.registry }}/\${{ env.ECR_REPOSITORY }}:\${{ github.sha }}
+          kustomize edit set image \${{ ecr-build-push.steps.login-ecr.outputs.registry }}/\${{ env.ECR_REPOSITORY }}=\${{ ecr-build-push.steps.login-ecr.outputs.registry }}/\${{ env.ECR_REPOSITORY }}:\${{ github.sha }}
           cat kustomization.yaml
 
       # 수정된 파일 commit & push
