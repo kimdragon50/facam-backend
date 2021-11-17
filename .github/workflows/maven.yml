@@ -39,7 +39,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
-  ecr-build-push:
+  ecr-build-push-and-deploy:
     name: ecr-build-push
     runs-on: ubuntu-latest
     needs: mvn-build
