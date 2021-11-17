@@ -25,7 +25,7 @@ env:
 
 jobs:
   mvn-build:
-
+    name: mvn-build
     runs-on: ubuntu-latest
 
     steps:
@@ -40,7 +40,7 @@ jobs:
       run: mvn -B package --file pom.xml
 
   ecr-build-push:
-    name: Deploy
+    name: ecr-build-push
     runs-on: ubuntu-latest
     environment: production
 
@@ -82,6 +82,7 @@ jobs:
           tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
 
   deploy:
+    name: gitops deploy
     runs-on: ubuntu-latest
     # build job 완료 후 진행
     needs: ecr-build-push
