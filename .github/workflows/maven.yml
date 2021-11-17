@@ -1,7 +1,7 @@
 # This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-name: CI CD
+name: backend emp - CI CD
 #on:
 #  push:
 #    branches: [ main ]
@@ -60,19 +60,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-#      - name: Build, tag, and push image to Amazon ECR
-#        id: build-image
-#        env:
-#          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-#          IMAGE_TAG: ${{ github.sha }}
-#        run: |backend-emp
-#          # Build a docker container and
-#          # push it to ECR so that it can
-#          # be deployed to ECS.
-#          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-#          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-#          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-      - name: Docker Build and Push
+      - name: Docker Build and ECR Push and Yaml Deploy
         id: docker_build
         uses: docker/build-push-action@v2
         with:
@@ -106,14 +94,14 @@ jobs:
       - name: Update Kubernetes resources
         run: |
           pwd
-          cd emp-gitops/overlays/
+          cd emp-gitops/overlays/prd/
           echo \${{ steps.login-ecr.outputs.registry }}/\${{ env.ECR_REPOSITORY }}
           echo \${{ steps.login-ecr.outputs.registry }}/\${{ env.ECR_REPOSITORY }}:\${{ github.sha }}
           kustomize edit set image \${{ steps.login-ecr.outputs.registry }}/\${{ env.ECR_REPOSITORY }}=\${{ steps.login-ecr.outputs.registry }}/\${{ env.ECR_REPOSITORY }}:\${{ github.sha }}
           cat kustomization.yaml
 
       # 수정된 파일 commit & push
-      - name: Commit files
+      - name: Commit minifest files
         run: |
           cd emp-gitops
           git config --global user.email "github-actions@github.com"
@@ -122,22 +110,3 @@ jobs:
           git push -u origin backend-emp
 
 
-
-#
-#      - name: deploy to cluster
-#        uses: kodermax/kubectl-aws-eks@master
-#        env:
-#          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-#          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-#          IMAGE_TAG: ${{ github.sha }}
-#          K8S_DEPLOYMENT: emp-api
-#        with:
-#          args: set image deployment/$ECR_REPOSITORY $ECR_REPOSITORY=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -n $KUBE_NAMESPACE
-#
-#      - name: verify deployment
-#        uses: kodermax/kubectl-aws-eks@master
-#        ## Consensys/kubernetes-action@master
-#        env:
-#          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-#        with:
-#          args: rollout status deployment/my-app
