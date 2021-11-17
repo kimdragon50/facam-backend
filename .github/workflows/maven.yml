@@ -60,32 +60,46 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build, tag, and push image to Amazon ECR
-        id: build-image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          # Build a docker container and
-          # push it to ECR so that it can
-          # be deployed to ECS.
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-
-      - name: deploy to cluster
-        uses: kodermax/kubectl-aws-eks@master
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ github.sha }}
+#      - name: Build, tag, and push image to Amazon ECR
+#        id: build-image
+#        env:
+#          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+#          IMAGE_TAG: ${{ github.sha }}
+#        run: |backend-emp
+#          # Build a docker container and
+#          # push it to ECR so that it can
+#          # be deployed to ECS.
+#          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+#          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+#          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+      - name: Build and Push
+        id: docker_build
+        uses: docker/build-push-action@v2
         with:
-          args: get deploy -A
-          ## set image deployment/$ECR_REPOSITORY $ECR_REPOSITORY=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -n $KUBE_NAMESPACE
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
 
-      - name: verify deployment
-        uses: kodermax/kubectl-aws-eks@master
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-        with:
-          args: rollout status deployment/my-app
+
+
+
+#
+#      - name: deploy to cluster
+#        uses: kodermax/kubectl-aws-eks@master
+#        env:
+#          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+#          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+#          IMAGE_TAG: ${{ github.sha }}
+#          K8S_DEPLOYMENT: emp-api
+#        with:
+#          args: set image deployment/$ECR_REPOSITORY $ECR_REPOSITORY=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -n $KUBE_NAMESPACE
+#
+#      - name: verify deployment
+#        uses: kodermax/kubectl-aws-eks@master
+#        ## Consensys/kubernetes-action@master
+#        env:
+#          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+#        with:
+#          args: rollout status deployment/my-app
