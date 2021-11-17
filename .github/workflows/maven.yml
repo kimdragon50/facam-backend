@@ -70,11 +70,6 @@ jobs:
           push: true
           tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
 
-  deploy:
-    runs-on: ubuntu-latest
-  # build job 완료 후 진행
-    needs: ecr-build-push
-    steps:
       - name: Get verion
         id: image
         run: |
@@ -100,9 +95,9 @@ jobs:
         run: |
           pwd
           cd emp-gitops/overlays/prd/
-          echo \${{ ecr-build-push.steps.login-ecr.outputs.registry }}/\${{ env.ECR_REPOSITORY }}
-          echo \${{ ecr-build-push.steps.login-ecr.outputs.registry }}/\${{ env.ECR_REPOSITORY }}:\${{ github.sha }}
-          kustomize edit set image \${{ ecr-build-push.steps.login-ecr.outputs.registry }}/\${{ env.ECR_REPOSITORY }}=\${{ ecr-build-push.steps.login-ecr.outputs.registry }}/\${{ env.ECR_REPOSITORY }}:\${{ github.sha }}
+          echo \${{ steps.login-ecr.outputs.registry }}/\${{ env.ECR_REPOSITORY }}
+          echo \${{ steps.login-ecr.outputs.registry }}/\${{ env.ECR_REPOSITORY }}:\${{ github.sha }}
+          kustomize edit set image \${{ steps.login-ecr.outputs.registry }}/\${{ env.ECR_REPOSITORY }}=\${{ steps.login-ecr.outputs.registry }}/\${{ env.ECR_REPOSITORY }}:\${{ github.sha }}
           cat kustomization.yaml
 
       # 수정된 파일 commit & push
