@@ -71,7 +71,7 @@ jobs:
 #          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
 #          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 #          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-      - name: Build and Push
+      - name: Docker Build and Push
         id: docker_build
         uses: docker/build-push-action@v2
         with:
@@ -84,7 +84,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     # build job 완료 후 진행
-    needs: build
+    needs: ecr-build-push
 
     steps:
       - name: Get verion
