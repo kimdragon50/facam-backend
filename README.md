@@ -46,10 +46,10 @@ java -jar employee-management-backend-0.0.1-SNAPSHOT.jar
 ### docker build and running
 
 ```
-docker build --tag app:0.1 .
+docker build -t backend .
 
 ## Mac m1 에서는 이렇게 실행
-docker buildx build --platform linux/amd64 -t backend-emp .
+docker buildx build --platform linux/amd64 -t bakcend .
 
 docker run --net="host" -p 8080:8080 app:0.1 
 ## 실행안됌 왜? 이 도커안에는 mysql이 없으니까
