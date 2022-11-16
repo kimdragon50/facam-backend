@@ -17,31 +17,31 @@
 
     <properties>
         <java.version>11</java.version>
-        <jib.maven-plugin-version>1.6.1</jib.maven-plugin-version>
-        <time-zone>Asia/Seoul</time-zone>
-        <digest>sha256:8671f949e6f7d28d4ffcc574e3b0ce1f4810aca2c72769de5ce7d6e9ffbe7a79</digest>
-        <account>058475846659</account>
-        <ecr-image>backend-base</ecr-image>
+<!--        <jib.maven-plugin-version>1.6.1</jib.maven-plugin-version>-->
+<!--        <time-zone>Asia/Seoul</time-zone>-->
+<!--        <digest>sha256:8671f949e6f7d28d4ffcc574e3b0ce1f4810aca2c72769de5ce7d6e9ffbe7a79</digest>-->
+<!--        <account>058475846659</account>-->
+<!--        <ecr-image>backend-base</ecr-image>-->
 
     </properties>
 
-    <profiles>
-        <profile>
-            <id>local</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
+<!--    <profiles>-->
+<!--        <profile>-->
+<!--            <id>local</id>-->
+<!--            <activation>-->
+<!--                <activeByDefault>true</activeByDefault>-->
+<!--            </activation>-->
+<!--        </profile>-->
 
-        <profile>
-            <id>prod</id>
-            <properties>
-                <account>058475846659</account>
-                <ecr-image>backend-base</ecr-image>
-            </properties>
-        </profile>
+<!--        <profile>-->
+<!--            <id>prod</id>-->
+<!--            <properties>-->
+<!--                <account>058475846659</account>-->
+<!--                <ecr-image>backend-base</ecr-image>-->
+<!--            </properties>-->
+<!--        </profile>-->
 
-    </profiles>
+<!--    </profiles>-->
 
     <dependencies>
         <dependency>
@@ -138,40 +138,40 @@
     </dependencies>
 
 
-<!--    <build>-->
-<!--        <plugins>-->
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--            </plugin>-->
-<!--        </plugins>-->
-<!--    </build>-->
-
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-                <version>${jib.maven-plugin-version}</version>
-                <configuration>
-                    <to>
-                        <credHelper>ecr-login</credHelper>
-                    </to>
-                    <from>
-                        <image>${account}.dkr.ecr.ap-northeast-2.amazonaws.com/${ecr-image}@${digest}</image>
-                    </from>
-                    <container>
-                        <jvmFlags>
-                            <jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
-                        </jvmFlags>
-                    </container>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
+
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <groupId>com.google.cloud.tools</groupId>-->
+<!--                <artifactId>jib-maven-plugin</artifactId>-->
+<!--                <version>${jib.maven-plugin-version}</version>-->
+<!--                <configuration>-->
+<!--                    <to>-->
+<!--                        <credHelper>ecr-login</credHelper>-->
+<!--                    </to>-->
+<!--                    <from>-->
+<!--                        <image>${account}.dkr.ecr.ap-northeast-2.amazonaws.com/${ecr-image}@${digest}</image>-->
+<!--                    </from>-->
+<!--                    <container>-->
+<!--                        <jvmFlags>-->
+<!--                            <jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>-->
+<!--                        </jvmFlags>-->
+<!--                    </container>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
 
 </project>
