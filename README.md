@@ -12,11 +12,46 @@ spring.datasource.password=
 spring.jpa.hibernate.ddl-auto=update
 ```
 
+### docker mysql insatll
+```
+docker pull mysql:8.0.22 --platform linux/amd64
+docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=12345 --name mysql-db mysql:8.0.22
+
+docker exec -it mysql-db bash
+
+## optional 
+# apt-get update 
+# apt-get install -y vim
+# vi /etc/mysql/my.cnf
+```
 ### MySQL DB
 Create DB Name : employee
 Create Table : employee
-Columns : id, email_address, first_name, last_name
+(생성할 필요 없음) Columns : id, email_address, first_name, last_name
+
+```
+create database employee;
+show databases;
+GRANT ALL PRIVILEGES ON employee.* TO root@localhost;
+flush privileges;
+```
 
 ### maven build
 mvn clean
 mvn package
+
+### java 
+java -jar employee-management-backend-0.0.1-SNAPSHOT.jar
+
+### docker build and running
+
+```
+docker build --tag app:0.1 .
+
+## Mac m1 에서는 이렇게 실행
+docker buildx build --platform linux/amd64 -t backend-emp .
+
+docker run --net="host" -p 8080:8080 app:0.1 
+## 실행안됌 왜? 이 도커안에는 mysql이 없으니까
+## 도커끼리 통신할 수 있도록 하고 DB url설정 변경필요
+``` 
