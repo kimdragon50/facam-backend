@@ -13,6 +13,10 @@ spring.jpa.hibernate.ddl-auto=update
 ```
 
 ### MySQL DB
-DB Name : employee
-Table : employee
+Create DB Name : employee
+Create Table : employee
 Columns : id, email_address, first_name, last_name
+
+### maven build
+mvn clean
+mvn package
