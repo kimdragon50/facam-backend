@@ -37,8 +37,10 @@ flush privileges;
 ```
 
 ### maven build
+```
 mvn clean
 mvn package
+```
 
 ### java 
 java -jar employee-management-backend-0.0.1-SNAPSHOT.jar
