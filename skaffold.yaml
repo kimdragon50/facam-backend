@@ -9,7 +9,7 @@ profiles:
         envTemplate:
           template: "{{.VER}}"
       artifacts:
-        - image: 058475846659.dkr.ecr.ap-northeast-2.amazonaws.com/backend-emp
+        - image: <account_id>.dkr.ecr.ap-northeast-2.amazonaws.com/backend
           jib:
             args:
               - -B
