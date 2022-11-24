@@ -1,7 +1,7 @@
 # backend
 
 ### JDK Version
-- jDK 11 
+- jDK 11 이상
 
 ### Modify with your MySQL info 
 `path` : src/main/resources/config/application.properties
