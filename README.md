@@ -43,7 +43,9 @@ mvn package
 ```
 
 ### java 
+```
 java -jar employee-management-backend-0.0.1-SNAPSHOT.jar
+```
 
 ### docker build and running
 
